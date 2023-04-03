@@ -1,0 +1,5 @@
+detectorSet: [c_0,d_0,e_0,f_0]
+DIM: 2
+vaaFun: "expansionFuncs/superV_2D_SD.txt"
+singleDetect: True
+output: "2D_MKP_SD"
