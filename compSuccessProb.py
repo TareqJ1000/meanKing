@@ -8,16 +8,24 @@ e_0 = sp.Symbol('e_0')
 f_0 = sp.Symbol('f_0')
 g_0 = sp.Symbol('g_0')
 h_0 = sp.Symbol('h_0')
+i_0 = sp.Symbol('i_0')
+j_0 = sp.Symbol('j_0')
+k_0 = sp.Symbol('k_0')
+l_0 = sp.Symbol('l_0')
 
 # Initialize symbols
 # Input modes
 a_0 = sp.Symbol('a_0')
 a_1 = sp.Symbol('a_1')
 a_2 = sp.Symbol('a_2')
+a_3 = sp.Symbol('a_3')
+a_4 = sp.Symbol('a_4')
 
 b_0 = sp.Symbol('b_0')
 b_1 = sp.Symbol('b_1')
 b_2 = sp.Symbol('b_2')
+b_3 = sp.Symbol('b_3')
+b_4 = sp.Symbol('b_4')
 
 # Converts phases from polar coordinates (exp(1*z) to cartesian coordinates (a+ib). 
 # Note that this forces any phase we apply onto our system to lie on the unit circle around the origin
@@ -93,7 +101,7 @@ def calcCoeffsNeo(phases,vaaFun,DIM):
     phase = polarToCart(phases)
     coeffs = []
     normCoeffs = []
-    for ii in range(DIM**2):
+    for ii in range(len(functions)):
         coeffs.append(functions[f'superVAA_{ii}'](phase))
     for coeff in coeffs:
         normCoeffs.append(normalizeVAANeo(coeff))
@@ -123,6 +131,5 @@ def successProb(phases, detectorSet,DIM,vaaFun,singleDetect):
     return -successProb
 
 
-vaaFun = "expansionFuncs/superV_2D_SD.txt"
 
 
