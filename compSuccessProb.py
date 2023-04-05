@@ -66,6 +66,8 @@ def normalizeVAANeo(coeffs):
 def calcDetectorProbs(detectorSet,coeffs,singleDetect):
     completeSet = createCompleteSet(detectorSet, singleDetect)
     detectorProbs = {}
+    print(len(coeffs))
+    print(len(completeSet))
     for ii, detector in enumerate(completeSet):
         temp = []
         for jj in range(len(coeffs)):
@@ -108,14 +110,19 @@ def calcCoeffsNeo(phases,vaaFun,DIM):
     return(normCoeffs)
 
 
-def computeProb(phases):
-    normCoeffs = calcCoeffsNeo(phases)
+def computeProb(phases, vaaFun, DIM):
+    normCoeffs = calcCoeffsNeo(phases, vaaFun, DIM)
     probAmplitudes = []
     for ii in range(len(normCoeffs)):
         temp = [np.abs(cc)**2 for cc in normCoeffs[ii]]
         probAmplitudes.append(temp)
     return probAmplitudes
-            
+
+def MostProbClicks(phases,detectorSet,DIM,vaaFun,singleDetect):
+    coeffs = calcCoeffsNeo(phases,vaaFun,DIM)
+    detectorProbs = calcDetectorProbs(detectorSet, coeffs, singleDetect)
+    mostProbs = calcMostProbs(detectorProbs)
+    return mostProbs 
  
 def successProb(phases, detectorSet,DIM,vaaFun,singleDetect):
     coeffs = calcCoeffsNeo(phases,vaaFun,DIM)
@@ -129,7 +136,4 @@ def successProb(phases, detectorSet,DIM,vaaFun,singleDetect):
         successProb = successProb + (condProb[detector]*totalProb[detector])
     print(successProb)
     return -successProb
-
-
-
 
