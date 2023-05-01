@@ -1,5 +1,5 @@
-detectorSet: [c_0,d_0,e_0,f_0,g_0,h_0,i_0,j_0,k_0,l_0]
-DIM: 5
-vaaFun: "expansionFuncs/superV_5D_SD.txt"
-singleDetect: True
-output: "5D_MKP_SD"
+detectorSet: [c_0,d_0,e_0,f_0,g_0,h_0,i_0,j_0,k_0,l_0,m_0,n_0,o_0,p_0]
+DIM: 7
+vaaFun: "expansionFuncs/superV_7D.txt"
+singleDetect: False
+output: "7D_MKP"

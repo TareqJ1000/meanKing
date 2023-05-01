@@ -66,8 +66,6 @@ def normalizeVAANeo(coeffs):
 def calcDetectorProbs(detectorSet,coeffs,singleDetect):
     completeSet = createCompleteSet(detectorSet, singleDetect)
     detectorProbs = {}
-    print(len(coeffs))
-    print(len(completeSet))
     for ii, detector in enumerate(completeSet):
         temp = []
         for jj in range(len(coeffs)):

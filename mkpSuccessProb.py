@@ -3,38 +3,39 @@ import sympy as sp
 from compSuccessProb import computeProb, createCompleteSet, MostProbClicks, calcCoeffsNeo 
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+from vaaGen import striation_func
 
-#Detector modes
-c_0 = sp.Symbol('c_0')
-d_0 = sp.Symbol('d_0')
-e_0 = sp.Symbol('e_0')
-f_0 = sp.Symbol('f_0')
-g_0 = sp.Symbol('g_0')
-h_0 = sp.Symbol('h_0')
-i_0 = sp.Symbol('i_0')
-j_0 = sp.Symbol('j_0')
-k_0 = sp.Symbol('k_0')
-l_0 = sp.Symbol('l_0')
+# The following functions are used to compute the set of VAA states corresponding to each possible eignestate
 
-bestPhases = np.load('bestPhases/5D_MKP_SD.npy')
-DIM = 5
-mkpFun = 'expansionFuncs/superV_5D_SD_MKP.txt'
-vaaFun = 'expansionFuncs/superV_5D_SD.txt'
-singleDetect = True
-detectorSet = [c_0,d_0,e_0,f_0,g_0,h_0,i_0,j_0,k_0,l_0]
-coeffLists = computeProb(bestPhases,mkpFun,DIM)
-mostProbs = MostProbClicks(bestPhases,detectorSet, DIM, vaaFun, singleDetect)
-detectorSets = createCompleteSet(detectorSet,singleDetect)
 
-# Compute MKP Sucess Probability for first two bases in 5D
+def compVAASet(DIM):
+    vaaOrtho = {}
+    count = 0
+    for j in np.arange(0,DIM):
+        for i in np.arange(0,DIM):
+            listor = []
+            for m in np.arange(0, DIM+1):
+                listor.append((m, striation_func(DIM,m,i,j)))
+            vaaOrtho[count] = listor
+            count = count+1
+    return vaaOrtho
 
-zeroBasis = [[0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24]]
-oneBasis = [[0,6,12,18,24],[4,5,11,17,23], [3,9,10,16,22],[2,8,14,15,21], [1,7,13,19,20]]
-twoBasis = [[0,8,11,19,22], [2,5,13,16,24], [4,7,10,18,21], [1,9,12,15,23], [3,6,14,17,20]]
-threeBasis = [[0,7,14,16,23], [3,5,12,19,21], [1,8,10,17,24], [22,15,13,6,4], [3,9,11,18,20]]
-fourBasis = [[0,9,13,17,21], [1,5,14,18,22], [2,10,19,23,6], [3,7,11,15,24], [20,16,12,8,4]]
-fiveBasis = [[0,5,10,15,20], [1,6,11,16,21], [2,7,12,17,22], [3,8,13,18,23], [4,9,14,19,24]]
+# Compute set of VAA sets for the eigenstates of a given basis
 
+def compBasis(DIM,m):
+    vaaOrtho = compVAASet(DIM)
+    print(vaaOrtho)
+    basis = []
+    for ii in range(DIM):
+        temp = []
+        for count, raga in enumerate(vaaOrtho.values()):
+            if(raga[m][1] == ii):
+                temp.append(count)
+        basis.append(temp)
+    return basis
+
+
+# Function that computes the sucess probability for Alice's mean king measurement
 def computeMKPSU(basis,detectorSets,mostProbs,coeffLists):
     basisSU = []
     for ii, sl in enumerate(basis):
@@ -47,4 +48,69 @@ def computeMKPSU(basis,detectorSets,mostProbs,coeffLists):
     print(f"success probabilities (state-by-state): {basisSU}")
     print(f"average success probability: {np.average(basisSU)}")
 
+#Detector modes
+c_0 = sp.Symbol('c_0')
+d_0 = sp.Symbol('d_0')
+e_0 = sp.Symbol('e_0')
+f_0 = sp.Symbol('f_0')
+g_0 = sp.Symbol('g_0')
+h_0 = sp.Symbol('h_0')
+i_0 = sp.Symbol('i_0')
+j_0 = sp.Symbol('j_0')
+k_0 = sp.Symbol('k_0')
+l_0 = sp.Symbol('l_0')
+m_0 = sp.Symbol('m_0')
+n_0 = sp.Symbol('n_0')
+o_0 = sp.Symbol('o_0')
+p_0 = sp.Symbol('p_0')
+
+
+bestPhases = np.load('bestPhases/7D_MKP.npy')
+DIM = 7
+mkpFun = 'expansionFuncs/superV_7D_MKP.txt'
+vaaFun = 'expansionFuncs/superV_7D.txt'
+singleDetect = False
+detectorSet = [c_0,d_0,e_0,f_0,g_0,h_0,i_0,j_0,k_0,l_0,m_0,n_0,o_0,p_0]
+coeffLists = computeProb(bestPhases,mkpFun,DIM)
+mostProbs = MostProbClicks(bestPhases,detectorSet, DIM, vaaFun, singleDetect)
+detectorSets = createCompleteSet(detectorSet,singleDetect)
+
+# in 3D
+
+zeroBasis =  compBasis(3,0)
+oneBasis = compBasis(3,1)
+twoBasis = compBasis(3,2)
+
+# Compute MKP Sucess Probability for first two bases in 5D
+
+zeroBasis = compBasis(5,0)
+oneBasis =  compBasis(5,1)
+twoBasis =  compBasis(5,2)
+threeBasis =  compBasis(5,3)
+fourBasis = compBasis(5,4)
+fiveBasis =  compBasis(5,5)
+
+
+# For 7D
+
+zeroBasis = compBasis(7,0)
+oneBasis =  compBasis(7,1)
+twoBasis =  compBasis(7,2)
+threeBasis =  compBasis(7,3)
+fourBasis = compBasis(7,4)
+fiveBasis =  compBasis(7,5)
+sixBasis = compBasis(7,6)
+sevenBasis =  compBasis(7,7)
+
+# For 7D
+
+
+computeMKPSU(zeroBasis, detectorSets, mostProbs, coeffLists[0:7])
+computeMKPSU(oneBasis, detectorSets, mostProbs, coeffLists[7:14])
+computeMKPSU(twoBasis, detectorSets, mostProbs, coeffLists[14:21])
+computeMKPSU(threeBasis, detectorSets, mostProbs, coeffLists[21:28])
+computeMKPSU(fourBasis, detectorSets, mostProbs, coeffLists[28:35])
+computeMKPSU(fiveBasis, detectorSets, mostProbs, coeffLists[35:42])
+computeMKPSU(sixBasis, detectorSets, mostProbs, coeffLists[42:49])
+computeMKPSU(sevenBasis, detectorSets, mostProbs, coeffLists[49:56])
 
