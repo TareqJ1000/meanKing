@@ -7,7 +7,6 @@ from vaaGen import striation_func
 
 # The following functions are used to compute the set of VAA states corresponding to each possible eignestate
 
-
 def compVAASet(DIM):
     vaaOrtho = {}
     count = 0
@@ -24,7 +23,6 @@ def compVAASet(DIM):
 
 def compBasis(DIM,m):
     vaaOrtho = compVAASet(DIM)
-    print(vaaOrtho)
     basis = []
     for ii in range(DIM):
         temp = []
@@ -47,6 +45,7 @@ def computeMKPSU(basis,detectorSets,mostProbs,coeffLists):
         basisSU.append(temp)
     print(f"success probabilities (state-by-state): {basisSU}")
     print(f"average success probability: {np.average(basisSU)}")
+    return np.average(basisSU)
 
 #Detector modes
 c_0 = sp.Symbol('c_0')
@@ -63,23 +62,18 @@ m_0 = sp.Symbol('m_0')
 n_0 = sp.Symbol('n_0')
 o_0 = sp.Symbol('o_0')
 p_0 = sp.Symbol('p_0')
-
-
+#zeroBasis =  compBasis(3,0)
+'''
 bestPhases = np.load('bestPhases/7D_MKP.npy')
 DIM = 7
-mkpFun = 'expansionFuncs/superV_7D_MKP.txt'
-vaaFun = 'expansionFuncs/superV_7D.txt'
+mkpFun = 'expansionFuncs/7D_MKP.txt'
+vaaFun = 'expansionFuncs/7D.txt'
 singleDetect = False
 detectorSet = [c_0,d_0,e_0,f_0,g_0,h_0,i_0,j_0,k_0,l_0,m_0,n_0,o_0,p_0]
 coeffLists = computeProb(bestPhases,mkpFun,DIM)
 mostProbs = MostProbClicks(bestPhases,detectorSet, DIM, vaaFun, singleDetect)
 detectorSets = createCompleteSet(detectorSet,singleDetect)
 
-# in 3D
-
-zeroBasis =  compBasis(3,0)
-oneBasis = compBasis(3,1)
-twoBasis = compBasis(3,2)
 
 # Compute MKP Sucess Probability for first two bases in 5D
 
@@ -90,6 +84,16 @@ threeBasis =  compBasis(5,3)
 fourBasis = compBasis(5,4)
 fiveBasis =  compBasis(5,5)
 
+
+
+# For 3D
+
+# in 3D
+
+zeroBasis =  compBasis(3,0)
+oneBasis = compBasis(3,1)
+twoBasis = compBasis(3,2)
+threeBasis = compBasis(3,3)
 
 # For 7D
 
@@ -102,15 +106,16 @@ fiveBasis =  compBasis(7,5)
 sixBasis = compBasis(7,6)
 sevenBasis =  compBasis(7,7)
 
-# For 7D
 
-
-computeMKPSU(zeroBasis, detectorSets, mostProbs, coeffLists[0:7])
-computeMKPSU(oneBasis, detectorSets, mostProbs, coeffLists[7:14])
-computeMKPSU(twoBasis, detectorSets, mostProbs, coeffLists[14:21])
-computeMKPSU(threeBasis, detectorSets, mostProbs, coeffLists[21:28])
-computeMKPSU(fourBasis, detectorSets, mostProbs, coeffLists[28:35])
-computeMKPSU(fiveBasis, detectorSets, mostProbs, coeffLists[35:42])
+zerBase = computeMKPSU(zeroBasis, detectorSets, mostProbs, coeffLists[0:7])
+oneBase = computeMKPSU(oneBasis, detectorSets, mostProbs, coeffLists[7:14])
+twoBase = computeMKPSU(twoBasis, detectorSets, mostProbs, coeffLists[14:21])
+threeBase = computeMKPSU(threeBasis, detectorSets, mostProbs, coeffLists[21:28])
+fourBase = computeMKPSU(fourBasis, detectorSets, mostProbs, coeffLists[28:35])
+fiveBase = computeMKPSU(fiveBasis, detectorSets, mostProbs, coeffLists[35:42])
 computeMKPSU(sixBasis, detectorSets, mostProbs, coeffLists[42:49])
 computeMKPSU(sevenBasis, detectorSets, mostProbs, coeffLists[49:56])
+'''
+
+
 

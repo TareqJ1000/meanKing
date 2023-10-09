@@ -7,6 +7,8 @@ import sympy as sp
 from compSuccessProb import computeProb, createCompleteSet, MostProbClicks, calcCoeffsNeo 
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+import seaborn as sns
+import math 
 
 #Detector modes
 c_0 = sp.Symbol('c_0')
@@ -20,15 +22,17 @@ j_0 = sp.Symbol('j_0')
 k_0 = sp.Symbol('k_0')
 l_0 = sp.Symbol('l_0')
 
-bestPhases = np.load('bestPhases/5D_MKP_SD.npy')
-DIM = 5
-mkpFun = 'expansionFuncs/superV_5D_SD_MKP.txt'
-vaaFun = 'expansionFuncs/superV_5D_SD.txt'
-singleDetect = True
-detectorSet = [c_0,d_0,e_0,f_0,g_0,h_0,i_0,j_0,k_0,l_0]
-coeffLists = computeProb(bestPhases,mkpFun,DIM)
+bestPhases = [np.random.uniform(-np.pi,np.pi) for z in range(6)]
+#bestPhases = np.load('bestPhases/3D_MKP_Phase.npy')
+DIM = 3
+mkpFun = 'expansionFuncs/3D_MKP.txt'
+vaaFun = 'expansionFuncs/3D.txt'
+singleDetect = False
+detectorSet = [c_0,d_0,e_0,f_0,g_0,h_0]
 
-colors = cm.rainbow(np.linspace(0, 2, 18))
+coeffLists = computeProb(bestPhases,vaaFun,DIM)
+
+colors = cm.rainbow(np.linspace(0, 1, 9))
 
 # Create float list of coefficents
 keyLists = []
@@ -39,6 +43,26 @@ for detect in detectorSets:
   prod2 = prod.replace("*",'') 
   keyLists.append(prod2)
   
+fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(10,10))
+  
+# Make subplots (for 3D case)
+
+for i, ax in enumerate(axes.flatten()):
+    ax.set_title(f'$|\phi_{i}>$')  # Set a title for each subplot
+    sns.barplot(x=keyLists, y=coeffLists[i], ax=ax,color=colors[math.floor(i)])
+    ax.tick_params(axis='x', rotation=45)
+    ax.set_ylim([0,1])
+    
+plt.tight_layout()
+plt.savefig('MKP_3D_successProbs.pdf', format='pdf')
+    
+
+
+
+
+
+'''
+
 plt.figure(figsize=(20,20))
 plt.subplot(331)
 fig = plt.bar(range(len(keyLists)), coeffLists[0],  width = 0.8, tick_label = keyLists, align = 'center', color = colors[0])
@@ -85,5 +109,6 @@ fig = plt.bar(range(len(keyLists)), coeffLists[8],  width = 0.8, tick_label = ke
 plt.ylabel("Detection Probability")
 #plt.ylim([0,1])
 plt.xticks(rotation=45);
-plt.subplots_adjust(left = -0.75)
-plt.savefig("3D_VAA_DetectorProb_V1.png")
+plt.subplots_adjust(left = -0.50)
+plt.savefig("3D_MKP_DetectorProb_V1.pdf", format='pdf')
+'''

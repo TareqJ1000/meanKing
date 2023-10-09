@@ -37,6 +37,7 @@ def polarToCart(z):
 
 # Creates the complete set of possible two-detector clicks in the setup
 # detectorSet -- list -- list of all detector modes in the setup
+
 def createCompleteSet(detectorSet, singleDetect):
     completeSet = []
     alreadyCheck = []
@@ -50,16 +51,26 @@ def createCompleteSet(detectorSet, singleDetect):
             completeSet.append(alpha*alpha)
     return completeSet
 
+# Let's seperately list all the possible single detector clicks present in our setup 
+
+def createSingleDetect(detectorSet):
+    singleSet = []
+    for alpha in detectorSet:
+        singleSet.append(alpha*alpha)
+        
+    return singleSet 
 
 def normalizeVAANeo(coeffs):
     sum = 0
     for jj in range(len(coeffs)):
             sum += np.abs(coeffs[jj])**2
+            
     coeffs = [coeff*(1/np.sqrt(float(sum))) for coeff in coeffs]
     # We verify that the states are normed now
     newSum = 0
     for coeff in coeffs:
         newSum += np.abs(coeff)**2
+        
     return coeffs
     
 
@@ -103,6 +114,7 @@ def calcCoeffsNeo(phases,vaaFun,DIM):
     normCoeffs = []
     for ii in range(len(functions)):
         coeffs.append(functions[f'superVAA_{ii}'](phase))
+    
     for coeff in coeffs:
         normCoeffs.append(normalizeVAANeo(coeff))
     return(normCoeffs)
@@ -121,6 +133,7 @@ def MostProbClicks(phases,detectorSet,DIM,vaaFun,singleDetect):
     detectorProbs = calcDetectorProbs(detectorSet, coeffs, singleDetect)
     mostProbs = calcMostProbs(detectorProbs)
     return mostProbs 
+
  
 def successProb(phases, detectorSet,DIM,vaaFun,singleDetect):
     coeffs = calcCoeffsNeo(phases,vaaFun,DIM)
@@ -128,10 +141,16 @@ def successProb(phases, detectorSet,DIM,vaaFun,singleDetect):
     totalProb = calcTotalProb(detectorProbs,DIM)
     condProb = calcCondProb(detectorProbs)
     successProb = 0 
-    count = 1
+    #singleDetect = createSingleDetect(detectorSet)
     for detector in detectorProbs.keys():
-        count = count+1
         successProb = successProb + (condProb[detector]*totalProb[detector])
-    print(successProb)
+    print(-successProb)
     return -successProb
+
+
+def mostProbOptim(phases, vaaFun, DIM): # Here, we are interested if we maximize the probability of one of the two detector clicks
+    probAmplitudes = computeProb(phases, vaaFun, DIM)
+    return -probAmplitudes[0][0]
+    
+    
 

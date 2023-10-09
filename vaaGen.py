@@ -45,10 +45,10 @@ def eigenstate(dim, isBar, vectorMode):
      input_modes_b.append(temp_b)
 
   if (isBar):
-    eigenstates.append(input_modes_b)
-  else: 
     eigenstates.append(input_modes_a)
- # explicit formula here to be provided in supplemental information document (to be provided)
+  else: 
+    eigenstates.append(input_modes_b)
+ 
   for m in np.arange(1,numOfBases):
     temp = []
     for i in np.arange(0, numOfEigenstates):
@@ -56,15 +56,14 @@ def eigenstate(dim, isBar, vectorMode):
       for j in np.arange(0, numOfEigenstates):
         san = sum_func(dim,j)
         if (isBar):
-         temp2 += np.conj((1/np.sqrt(dim))*qew**(i*(dim-j) - m*san)) * input_modes_b[j]
+         temp2 += np.conj((1/np.sqrt(dim))*qew**(i*(dim-j) - m*san)) * input_modes_a[j]
         else:
-         temp2 += (1/np.sqrt(dim))*qew**(i*(dim-j) - m*san)*input_modes_a[j]
+         temp2 += (1/np.sqrt(dim))*qew**(i*(dim-j) - m*san)*input_modes_b[j]
       temp.append(temp2)
     eigenstates.append(temp)
 
   return(eigenstates)
   
-
 # Computes the tensor product between two kets. It is expected that the kets are expressed as vectors
 # a_0, b_0 - np.ndarray - vector form of our kets
 
@@ -133,6 +132,7 @@ def mkpGEN(dim,vectorMode):
         phi = phi + (1/np.sqrt(dim))*eigenstates[m][map]
       MEAN_KING.append(phi)
   return MEAN_KING
+
 
 
 
