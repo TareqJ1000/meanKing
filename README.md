@@ -1,13 +1,12 @@
 # meanKing
 Analysis code for the paper "Experimental Solutions to the High-Dimensional Mean King's Problem" by Jaouni et al. The code can 
-- Generate VAA states for any prime dimension using the Hayashi paper construction 
-- Computes the path mode polynomials corresponding to each input VAA state when they are each set onto the experimental setup
-- Computes/Plots the detector probabilities and the success probability of measurement on a VAA state. Options avaliable for with and without single detector clicks   and also for detector probabilities when sending MKP states as input
-- Fine tune the phases in the setup using a naive optimization routine (more or less default configuration from scipy.minimize)
 
-To do: 
-- Implement way to systematically compute the probability of a successful measurement for MKP. 
-- The dimensionality of our optimization space is very likely way, way bigger than is needed (5-Dimensions in particular has 60 PHASE SHIFTERS to optimize). We could    try doing some kind of sensitivity analysis to reduce the dimensionality of the optimization problem. In turn, this may allow us to converge to better solutions. 
+- Generate the VAA states for any prime dimension (except 2, which is hard-coded in the analysis code) following the Hayashi construction. 
+- Computes the path mode polynomials corresponding to each input VAA state when they are each set onto experimental setups. The experimental setups are represented mathematically by the transformations that they apply to input photon modes, and have to be computed by hand. 
+- Computes/plots the detector probabilities and the success probability of measurement on any given VAA state, as well as the probability that Alice succeeds against the mean king. Options avaliable for with and without single detector clicks,  and also for detector probabilities when sending MKP states as input. 
+- Fine tune the phases in the setup using a post-processing BFGS optimization routine.
+
+The CalculateSetups.ipynb or CompMKPExpansion.ipynb codes can be run to output a .txt file containing functions which implements the transformations from input to output. You then specify this in the .yaml file, then run computePhase to fine-tune the phases. The AnalyzeSetupProb.ipynb runs the analysis on the setups. 
 
 
 
