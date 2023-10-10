@@ -12,6 +12,10 @@ i_0 = sp.Symbol('i_0')
 j_0 = sp.Symbol('j_0')
 k_0 = sp.Symbol('k_0')
 l_0 = sp.Symbol('l_0')
+m_0 = sp.Symbol('m_0')
+n_0 = sp.Symbol('n_0')
+o_0 = sp.Symbol('o_0')
+p_0 = sp.Symbol('p_0')
 
 # Initialize symbols
 # Input modes
@@ -26,6 +30,7 @@ b_1 = sp.Symbol('b_1')
 b_2 = sp.Symbol('b_2')
 b_3 = sp.Symbol('b_3')
 b_4 = sp.Symbol('b_4')
+
 
 # Converts phases from polar coordinates (exp(1*z) to cartesian coordinates (a+ib). 
 # Note that this forces any phase we apply onto our system to lie on the unit circle around the origin
