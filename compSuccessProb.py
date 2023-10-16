@@ -16,6 +16,7 @@ m_0 = sp.Symbol('m_0')
 n_0 = sp.Symbol('n_0')
 o_0 = sp.Symbol('o_0')
 p_0 = sp.Symbol('p_0')
+q_0 = sp.Symbol('q_0')
 
 # Initialize symbols
 # Input modes

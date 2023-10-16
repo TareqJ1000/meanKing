@@ -16,7 +16,11 @@ i_0 = sp.Symbol('i_0')
 j_0 = sp.Symbol('j_0')
 k_0 = sp.Symbol('k_0')
 l_0 = sp.Symbol('l_0')
-
+m_0 = sp.Symbol('m_0')
+n_0 = sp.Symbol('n_0')
+o_0 = sp.Symbol('o_0')
+p_0 = sp.Symbol('p_0')
+q_0 = sp.Symbol('q_0')
 c_1 = sp.Symbol('c_1')
 d_1 = sp.Symbol('d_1')
 

@@ -1,6 +1,0 @@
-detectorSet: [c_0,d_0,e_0,f_0,g_0,h_0]
-DIM: 3
-vaaFun: "expansionFuncs/3D_October6.txt"
-singleDetect: False
-output: "3D_Phase_New_October6"
-numPhases: 6 
